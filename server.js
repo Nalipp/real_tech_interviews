@@ -1,29 +1,23 @@
 const express = require('express');
 const app = express();
-const logger = require('morgan');
 const path = require('path');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const favicon = require('serve-favicon');
 
-// view engine setup
-app.set('view engine', 'pug');
-//app.use(favicon(envConfig.rootPath + '/public/favicon.ico'));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
-app.use(cookieParser());
+// Environments
+const env = process.env.NODE_ENV || 'development';
+const envConfig = require('./config/env')[env];
 
-const port = process.env.PORT || 3000;
-// telling Express to serve static objects from the /public/ dir, but make it seem like the top level
+// Express configuration
+require('./config/config')(app, envConfig);
+
+// Database
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
 require('./routes/routesConfig.js')(app);
 
 // Start server
-app.listen(port, () => {
-  console.log('Server listening on port ' + port);
+app.listen(envConfig.port, () => {
+  console.log('Server listening on port ' + envConfig.port);
 });
 
 module.exports = app;
