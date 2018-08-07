@@ -19,13 +19,11 @@ const port = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
-app.get('/', (req, res) => {
-  res.render('main')
-});
+require('./routes/routesConfig.js')(app);
 
 // Start server
 app.listen(port, () => {
-  console.log('Server listening on port ' + 3000);
+  console.log('Server listening on port ' + port);
 });
 
 module.exports = app;
