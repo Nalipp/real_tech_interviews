@@ -13,6 +13,8 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
+
+const port = process.env.PORT || 3000;
 // telling Express to serve static objects from the /public/ dir, but make it seem like the top level
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -22,6 +24,6 @@ app.get('/', (req, res) => {
 });
 
 // Start server
-app.listen(3000, () => {
+app.listen(port, () => {
   console.log('Server listening on port ' + 3000);
 });
